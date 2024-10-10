@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="FlappyBird.MainPage"
+             Shell.NavBarIsVisible="false">
+
+   <Grid>
+        <Image Source="fundo.jpg"
+               Aspect="Fill"/>
+
+        <Image Source="galinha.png"
+               x:Name="galinha"
+               HeightRequest="130"
+               WidthRequest="130"/>
+
+        <Image Source="tronco_cima.png"
+            VerticalOptions="Start"
+            HorizontalOptions="End"
+               HeightRequest="350"/>
+
+        <Image Source="tronco_baixo.png"
+            VerticalOptions="End"
+            HorizontalOptions="End"
+               HeightRequest="350"/>
+
+        <Image Source="chao.jpg"
+               VerticalOptions="End"
+               HorizontalOptions="Fill"/>
+
+        <Frame IsVisible="true"
+            x:Name="frameGameOver"
+            BackgroundColor="#99000000"
+            HorizontalOptions="Fill"
+            VerticalOptions="Fill">
+            <Frame.GestureRecognizers>
+                <TapGestureRecognizer Tapped="OnGameOverCliked"/>
+            </Frame.GestureRecognizers>
+          <Image Source="gameover.png"/>
+        </Frame>
+    </Grid>
+
+</ContentPage>
