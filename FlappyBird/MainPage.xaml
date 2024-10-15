@@ -26,14 +26,16 @@
                HeightRequest="302"/>
 
         <Image Source="chao.jpg"
+              x:Name="Chao"
                VerticalOptions="End"
-               HorizontalOptions="Fill"/>
+               HorizontalOptions="Fill"
+               Aspect="Fill"
+               HeightRequest="70"/>
 
         <Frame IsVisible="true"
             x:Name="frameGameOver"
             BackgroundColor="#99000000"
-            HorizontalOptions="Fill"
-            VerticalOptions="Fill">
+            >
             <Frame.GestureRecognizers>
                 <TapGestureRecognizer Tapped="OnGameOverCliked"/>
             </Frame.GestureRecognizers>
