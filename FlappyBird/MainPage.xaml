@@ -5,6 +5,9 @@
              Shell.NavBarIsVisible="false">
 
    <Grid>
+   <Grid.GestureRecognizers>
+   <TapGestureRecognizer Tapped="OnGridClicked"/>
+   </Grid.GestureRecognizers>
         <Image Source="fundo.jpg"
                Aspect="Fill"/>
 
@@ -17,30 +20,45 @@
                x:Name="TroncoCima"
                VerticalOptions="Start"
                HorizontalOptions="End"
-               HeightRequest="302"/>
+               HeightRequest="380"/>
 
         <Image Source="troncodebaixo.png"
-              x:Name="TroncoBaixo"
-              VerticalOptions="End"
+               x:Name="TroncoBaixo"
+               VerticalOptions="End"
                HorizontalOptions="End"
-               HeightRequest="302"/>
+               HeightRequest="380"/>
 
         <Image Source="chao.jpg"
-              x:Name="Chao"
+               x:Name="Chao"
                VerticalOptions="End"
                HorizontalOptions="Fill"
                Aspect="Fill"
                HeightRequest="70"/>
+       <Label Text="Troncos: 000" 
+              TextColor="#c43b3b"
+              FontSize="30"
+              Margin="20, 10"
+              x:Name="labelScore"/>
 
-        <Frame IsVisible="true"
+       <Frame IsVisible="true"
             x:Name="frameGameOver"
-            BackgroundColor="#99000000"
-            >
-            <Frame.GestureRecognizers>
-                <TapGestureRecognizer Tapped="OnGameOverCliked"/>
-            </Frame.GestureRecognizers>
-          <Image Source="gameover.png"/>
-        </Frame>
+            BackgroundColor="#99000000">
+
+              <Frame.GestureRecognizers>
+                     <TapGestureRecognizer Tapped="OnGameOverCliked"/>
+              </Frame.GestureRecognizers>
+              <VerticalStackLayout VerticalOptions="Center">  
+              <Image Source="gameover.png"
+                     HeightRequest="250"/>
+              <Label Text="Você passou por 0 troncos"
+                     TextColor="#c43b3b"
+                     FontSize="30"
+                     x:Name="labelGameOver"
+                     HorizontalOptions="Center"
+                     Margin="10"
+                     HorizontalTextAlignment="Center"/>
+       </VerticalStackLayout>
+       </Frame>
     </Grid>
 
 </ContentPage>

@@ -2,12 +2,18 @@
 
 public partial class MainPage : ContentPage
 {
-    const int Gravidade = 1;
+    const int Gravidade = 3;
 	const int tempoEntreFrames = 25;
+	const int forcaPulo = 30;
+	const int maxTempoPulando = 3; //frames
+	const int aberturaMinima = 100;
 	bool EstaMorto = true;
+	bool estaPulando = false;
 	double largura_Janela = 0;
 	double altura_Janela = 0;
 	int velocidade = 20;
+	int tempoPulando = 0;
+	int score = 0;
 	public MainPage()
 	{
 		InitializeComponent();
@@ -27,8 +33,14 @@ public partial class MainPage : ContentPage
 			{
 				EstaMorto = true;
 				frameGameOver.IsVisible = true;
+				labelGameOver.Text="Você passou \n por "+ score + " \n troncos";
 				break;
 			}
+			if (estaPulando)
+			   AplicaPulo();
+			   else
+			   AplicaGravidade();
+
 			await Task.Delay(tempoEntreFrames);
 		}
 	}
@@ -42,6 +54,7 @@ public partial class MainPage : ContentPage
 	{
 		galinha.TranslationY = 0;
 		EstaMorto = false;
+		score = 0;
 	}
     protected override void OnSizeAllocated(double w, double h)
     {
@@ -57,6 +70,12 @@ public partial class MainPage : ContentPage
 	 {
 		TroncoBaixo.TranslationX = 0;
 		TroncoCima.TranslationX = 0;
+		var alturaMax = -100;
+		var alturaMin = -TroncoBaixo.HeightRequest;
+		TroncoCima.TranslationY = Random.Shared.Next((int)alturaMin, (int)alturaMax);
+		TroncoBaixo.TranslationY=TroncoCima.TranslationY+aberturaMinima+TroncoBaixo.HeightRequest;
+		score ++;
+		labelScore.Text = "Troncos:" + score.ToString ("D3");
 	 }
 	}
 	bool VerificaColisao()
@@ -86,4 +105,21 @@ public partial class MainPage : ContentPage
 		else
 		   return false;
 	}
+	void AplicaPulo()
+	{
+		galinha.TranslationY -= forcaPulo;
+		tempoPulando++;
+
+		if (tempoPulando >= maxTempoPulando)
+		{
+			estaPulando = false;
+			tempoPulando = 0;
+		}
+	}
+
+	void OnGridClicked(object s, TappedEventArgs args)
+	{
+		estaPulando = true;
+	}
+
 }
