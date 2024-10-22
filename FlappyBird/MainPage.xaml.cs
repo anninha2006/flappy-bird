@@ -14,6 +14,7 @@ public partial class MainPage : ContentPage
 	int velocidade = 20;
 	int tempoPulando = 0;
 	int score = 0;
+
 	public MainPage()
 	{
 		InitializeComponent();
@@ -55,6 +56,14 @@ public partial class MainPage : ContentPage
 		galinha.TranslationY = 0;
 		EstaMorto = false;
 		score = 0;
+		{
+			TroncoCima.TranslationX =- largura_Janela;
+			TroncoBaixo.TranslationY =- largura_Janela;
+			galinha.TranslationX = 0;
+			galinha.TranslationY = 0;
+			score = 0;
+			GerenciaTronco();
+		}
 	}
     protected override void OnSizeAllocated(double w, double h)
     {
@@ -80,15 +89,12 @@ public partial class MainPage : ContentPage
 	}
 	bool VerificaColisao()
 	{
-		if(!EstaMorto)
-		{
-			if(VerificaColisaoTeto() || VerificaColisaoChao() )
-			{
+			if(VerificaColisaoTeto() || VerificaColisaoChao() || VerificaColisaoTroncoCima() || VerificaColisaoTroncoBaixo())
 				return true;
-			}
-		}
-		return false;
+			else
+		        return false;
 	}
+	
 	bool VerificaColisaoTeto()
 	{
 		var minY = -altura_Janela/2;
@@ -122,4 +128,36 @@ public partial class MainPage : ContentPage
 		estaPulando = true;
 	}
 
+	bool VerificaColisaoTroncoCima()
+	{
+		var posHGalinha = (largura_Janela / 2)-(galinha.WidthRequest/2);
+		var posVGalinha = (altura_Janela / 2)-(galinha.HeightRequest/2)+ galinha.TranslationY;
+		
+		if (posHGalinha >= Math.Abs(TroncoCima.TranslationX) - TroncoCima.WidthRequest &&
+		    posHGalinha <= Math.Abs(TroncoCima.TranslationX) + TroncoCima.WidthRequest &&
+			posVGalinha <= TroncoCima.HeightRequest + TroncoCima.TranslationY)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	bool VerificaColisaoTroncoBaixo()
+	{
+		var posHGalinha = (largura_Janela / 2)-(galinha.WidthRequest/2);
+		var posVGalinha = (altura_Janela / 2)-(galinha.HeightRequest/2)+ galinha.TranslationY;
+		
+		if (posHGalinha >= Math.Abs(TroncoBaixo.TranslationX) - TroncoBaixo.WidthRequest &&
+		    posHGalinha <= Math.Abs(TroncoBaixo.TranslationX) + TroncoBaixo.WidthRequest &&
+			posVGalinha <= TroncoBaixo.HeightRequest + TroncoBaixo.TranslationY)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
 }

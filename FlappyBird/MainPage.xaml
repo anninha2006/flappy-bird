@@ -12,18 +12,24 @@
                Aspect="Fill"/>
 
         <Image Source="galinha.png"
+              BackgroundColor="#99000000"
                x:Name="galinha"
+               HorizontalOptions="Center"
                HeightRequest="130"
                WidthRequest="130"/>
 
         <Image Source="troncocima.png"
+              BackgroundColor="#99000000"
                x:Name="TroncoCima"
+               WidthRequest="50"
                VerticalOptions="Start"
                HorizontalOptions="End"
                HeightRequest="380"/>
 
         <Image Source="troncodebaixo.png"
+              BackgroundColor="#99000000"
                x:Name="TroncoBaixo"
+               WidthRequest="50"
                VerticalOptions="End"
                HorizontalOptions="End"
                HeightRequest="380"/>
