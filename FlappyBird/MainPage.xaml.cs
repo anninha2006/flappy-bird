@@ -133,36 +133,29 @@ public partial class MainPage : ContentPage
 	}
 
 	bool VerificaColisaoTroncoCima()
-	{
-		var posHGalinha = (largura_Janela / 2)-(galinha.WidthRequest/2);
-		var posVGalinha = (altura_Janela / 2)-(galinha.HeightRequest/2)+ galinha.TranslationY;
-		
-		if (posHGalinha >= Math.Abs(TroncoCima.TranslationX) - TroncoCima.WidthRequest &&
-		    posHGalinha <= Math.Abs(TroncoCima.TranslationX) + TroncoCima.WidthRequest &&
-			posVGalinha <= TroncoCima.HeightRequest + TroncoCima.TranslationY)
-		{
-			return true;
-		}
-		else
-		{
-			return false;
-		}
-	}
+  {
+    var posicaoHorizontalPardal = (largura_Janela - 50) - (galinha.WidthRequest / 2);
+    var posicaoVerticalPardal   = (altura_Janela / 2) - (galinha.HeightRequest / 2) + galinha.TranslationY;
+
+    if (
+         posicaoHorizontalPardal >= Math.Abs(TroncoCima.TranslationX) - TroncoCima.WidthRequest &&
+         posicaoHorizontalPardal <= Math.Abs(TroncoCima.TranslationX) + TroncoCima.WidthRequest &&
+         posicaoVerticalPardal   <= TroncoCima.HeightRequest + TroncoCima.TranslationY
+       )
+      return true;
+    else
+      return false;
+  }
 	bool VerificaColisaoTroncoBaixo()
 	{
-		var posVGalinha = (largura_Janela / 2)-(galinha.WidthRequest/2);
-		var posHGalinha = (altura_Janela / 2)-(galinha.HeightRequest/2)+ galinha.TranslationY;
-		var yMaxTronco= TroncoCima.HeightRequest + TroncoCima.TranslationY+aberturaMinima;
-		
-		if (posHGalinha >= Math.Abs(TroncoBaixo.TranslationX) - TroncoBaixo.WidthRequest &&
-		    posHGalinha <= Math.Abs(TroncoBaixo.TranslationX) + TroncoBaixo.WidthRequest &&
-			posVGalinha >= yMaxTronco)
-		{
+		var posicaoHPardal = (largura_Janela / 2) - (galinha.WidthRequest / 2);
+		var posicaoVPardal = (altura_Janela / 2) - (galinha.HeightRequest / 2) + galinha.TranslationY;
+
+		if (posicaoHPardal >= Math.Abs(TroncoBaixo.TranslationX) + TroncoBaixo.WidthRequest && 
+		posicaoHPardal <= Math.Abs(TroncoBaixo.TranslationX) + TroncoBaixo.WidthRequest && 
+		posicaoVPardal <= TroncoBaixo.HeightRequest + TroncoBaixo.TranslationY)
 			return true;
-		}
 		else
-		{
 			return false;
-		}
 	}
 }
