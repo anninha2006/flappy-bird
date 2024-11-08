@@ -2,16 +2,16 @@
 
 public partial class MainPage : ContentPage
 {
-    const int Gravidade = 3;
+    const int Gravidade = 5;
 	const int tempoEntreFrames = 25;
 	const int forcaPulo = 30;
 	const int maxTempoPulando = 3; //frames
-	const int aberturaMinima = 100;
+	const int aberturaMinima = 80;
 	bool EstaMorto = true;
 	bool estaPulando = false;
 	double largura_Janela = 0;
 	double altura_Janela = 0;
-	int velocidade = 20;
+	int velocidade = 5;
 	int tempoPulando = 0;
 	int score = 0;
 
@@ -27,20 +27,21 @@ public partial class MainPage : ContentPage
 	async Task Desenha()
 	{
 		while(!EstaMorto)
-		{
-			AplicaGravidade();
-			GerenciaTronco();
-			if (VerificaColisao())
-			{
-				EstaMorto = true;
-				frameGameOver.IsVisible = true;
-				labelGameOver.Text="Você passou \n por "+ score + " \n troncos";
-				break;
-			}
+		{ 
 			if (estaPulando)
 			   AplicaPulo();
 			   else
 			   AplicaGravidade();
+
+			GerenciaTronco();
+
+			if (VerificaColisao())
+			{
+				EstaMorto = true;
+				frameGameOver.IsVisible = true;
+				labelGameOver.Text= $"Você passou por \n " + score + " troncos";
+				break;
+			}
 
 			await Task.Delay(tempoEntreFrames);
 		}
@@ -53,17 +54,13 @@ public partial class MainPage : ContentPage
 	}
 	void Inicializar()
 	{
-		galinha.TranslationY = 0;
 		EstaMorto = false;
 		score = 0;
-		{
-			TroncoCima.TranslationX =- largura_Janela;
-			TroncoBaixo.TranslationY =- largura_Janela;
-			galinha.TranslationX = 0;
-			galinha.TranslationY = 0;
-			score = 0;
-			GerenciaTronco();
-		}
+	    TroncoCima.TranslationX =- largura_Janela;
+	    TroncoBaixo.TranslationX =- largura_Janela;
+		galinha.TranslationY = 0;
+		galinha.TranslationX = 0;
+		GerenciaTronco();
 	}
     protected override void OnSizeAllocated(double w, double h)
     {
@@ -77,13 +74,15 @@ public partial class MainPage : ContentPage
 	 TroncoBaixo.TranslationX -= velocidade;
 	 if (TroncoBaixo.TranslationX <-largura_Janela)
 	 {
-		TroncoBaixo.TranslationX = 0;
-		TroncoCima.TranslationX = 0;
+		TroncoBaixo.TranslationX = 20;
+		TroncoCima.TranslationX = 20;
+
 		var alturaMax = -100;
 		var alturaMin = -TroncoBaixo.HeightRequest;
+
 		TroncoCima.TranslationY = Random.Shared.Next((int)alturaMin, (int)alturaMax);
 		TroncoBaixo.TranslationY=TroncoCima.TranslationY+aberturaMinima+TroncoBaixo.HeightRequest;
-		score ++;
+	
 		labelScore.Text = "Troncos:" + score.ToString ("D3");
 		score ++;
 		if (score % 2 == 0)
@@ -91,14 +90,11 @@ public partial class MainPage : ContentPage
 	 }
 	}
 	bool VerificaColisao()
-	{
-		if (! EstaMorto)
-		{
-			return VerificaColisaoTeto() || VerificaColisaoChao() || VerificaColisaoTroncoCima() || VerificaColisaoTroncoBaixo();
-		}      
-			    return false;
-	}
 	
+		{
+			return (!EstaMorto && (VerificaColisaoTeto() || VerificaColisaoChao() || VerificaColisaoTroncoCima() || VerificaColisaoTroncoBaixo()));
+		}      
+
 	bool VerificaColisaoTeto()
 	{
 		var minY = -altura_Janela/2;
@@ -134,13 +130,13 @@ public partial class MainPage : ContentPage
 
 	bool VerificaColisaoTroncoCima()
   {
-    var posicaoHorizontalPardal = (largura_Janela - 50) - (galinha.WidthRequest / 2);
-    var posicaoVerticalPardal   = (altura_Janela / 2) - (galinha.HeightRequest / 2) + galinha.TranslationY;
+    var posicaoHorizontalGalinha = largura_Janela - 50 - (galinha.WidthRequest / 2);
+    var posicaoVerticalGalinha = (altura_Janela / 2) - (galinha.HeightRequest / 2) + galinha.TranslationY;
 
     if (
-         posicaoHorizontalPardal >= Math.Abs(TroncoCima.TranslationX) - TroncoCima.WidthRequest &&
-         posicaoHorizontalPardal <= Math.Abs(TroncoCima.TranslationX) + TroncoCima.WidthRequest &&
-         posicaoVerticalPardal   <= TroncoCima.HeightRequest + TroncoCima.TranslationY
+         posicaoHorizontalGalinha >= Math.Abs(TroncoCima.TranslationX) - TroncoCima.WidthRequest &&
+         posicaoHorizontalGalinha <= Math.Abs(TroncoCima.TranslationX) + TroncoCima.WidthRequest &&
+         posicaoVerticalGalinha   <= TroncoCima.HeightRequest + TroncoCima.TranslationY
        )
       return true;
     else
@@ -148,14 +144,19 @@ public partial class MainPage : ContentPage
   }
 	bool VerificaColisaoTroncoBaixo()
 	{
-		var posicaoHPardal = (largura_Janela / 2) - (galinha.WidthRequest / 2);
-		var posicaoVPardal = (altura_Janela / 2) - (galinha.HeightRequest / 2) + galinha.TranslationY;
+		var posicaoHorizontalGalinha = largura_Janela / 50 - galinha.WidthRequest / 2;
+		var posicaoVerticalGalinha = (altura_Janela / 2) - (galinha.HeightRequest / 2) + galinha.TranslationY;
+        var yMaxTronco = TroncoCima.HeightRequest + TroncoCima.TranslationY + aberturaMinima;
 
-		if (posicaoHPardal >= Math.Abs(TroncoBaixo.TranslationX) + TroncoBaixo.WidthRequest && 
-		posicaoHPardal <= Math.Abs(TroncoBaixo.TranslationX) + TroncoBaixo.WidthRequest && 
-		posicaoVPardal <= TroncoBaixo.HeightRequest + TroncoBaixo.TranslationY)
+		if (posicaoHorizontalGalinha >= Math.Abs(TroncoBaixo.TranslationX) + TroncoBaixo.WidthRequest && 
+		posicaoHorizontalGalinha <= Math.Abs(TroncoBaixo.TranslationX) + TroncoBaixo.WidthRequest && 
+		posicaoVerticalGalinha >= yMaxTronco)
+		{	
 			return true;
+		}
 		else
+		{
 			return false;
+		}
 	}
 }

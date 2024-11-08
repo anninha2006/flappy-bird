@@ -14,24 +14,22 @@
         <Image Source="galinha.png"
               BackgroundColor="#99000000"
                x:Name="galinha"
-               HorizontalOptions="Center"
+               HorizontalOptions="Start"
                HeightRequest="130"
                WidthRequest="130"/>
 
         <Image Source="troncocima.png"
-              BackgroundColor="#99000000"
                x:Name="TroncoCima"
-               WidthRequest="50"
                VerticalOptions="Start"
                HorizontalOptions="End"
+               WidthRequest="80"
                HeightRequest="380"/>
 
-        <Image Source="troncodebaixo.png"
-              BackgroundColor="#99000000"
+        <Image Source="troncobaixo.png"
                x:Name="TroncoBaixo"
-               WidthRequest="50"
                VerticalOptions="End"
                HorizontalOptions="End"
+               WidthRequest="80"
                HeightRequest="380"/>
 
         <Image Source="chao.jpg"
