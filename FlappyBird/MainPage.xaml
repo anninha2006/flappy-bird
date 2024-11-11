@@ -22,15 +22,17 @@
                x:Name="TroncoCima"
                VerticalOptions="Start"
                HorizontalOptions="End"
+               Aspect="Fill"
                WidthRequest="80"
-               HeightRequest="380"/>
+               HeightRequest="360"/>
 
         <Image Source="troncobaixo.png"
                x:Name="TroncoBaixo"
                VerticalOptions="End"
-               HorizontalOptions="End"
+               HorizontalOptions="End" 
+               Aspect="Fill"
                WidthRequest="80"
-               HeightRequest="380"/>
+               HeightRequest="360"/>
 
         <Image Source="chao.jpg"
                x:Name="Chao"
