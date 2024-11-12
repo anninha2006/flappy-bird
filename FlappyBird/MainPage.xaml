@@ -12,27 +12,26 @@
                Aspect="Fill"/>
 
         <Image Source="galinha.png"
-              BackgroundColor="#99000000"
                x:Name="galinha"
                HorizontalOptions="Start"
-               HeightRequest="130"
-               WidthRequest="130"/>
+               HeightRequest="115"
+               WidthRequest="115"/>
 
         <Image Source="troncocima.png"
                x:Name="TroncoCima"
                VerticalOptions="Start"
                HorizontalOptions="End"
                Aspect="Fill"
-               WidthRequest="80"
-               HeightRequest="360"/>
+               WidthRequest="100"
+               HeightRequest="650"/>
 
         <Image Source="troncobaixo.png"
                x:Name="TroncoBaixo"
-               VerticalOptions="End"
+               VerticalOptions="Start"
                HorizontalOptions="End" 
                Aspect="Fill"
-               WidthRequest="80"
-               HeightRequest="360"/>
+               WidthRequest="100"
+               HeightRequest="650"/>
 
         <Image Source="chao.jpg"
                x:Name="Chao"
